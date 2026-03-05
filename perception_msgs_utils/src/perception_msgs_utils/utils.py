@@ -36,6 +36,7 @@ from .constants import (
     ISCACTR_MODEL_ID, ISCACTR_CONTINUOUS_STATE_SIZE, ISCACTR_DISCRETE_STATE_SIZE,
     HEXAMOTION_MODEL_ID, HEXAMOTION_CONTINUOUS_STATE_SIZE, HEXAMOTION_DISCRETE_STATE_SIZE,
     TRAFFICLIGHT_MODEL_ID, TRAFFICLIGHT_CONTINUOUS_STATE_SIZE, TRAFFICLIGHT_DISCRETE_STATE_SIZE,
+    CAMERA2D_MODEL_ID, CAMERA2D_CONTINUOUS_STATE_SIZE, CAMERA2D_DISCRETE_STATE_SIZE,
     CONTINUOUS_STATE_COVARIANCE_UNKNOWN
 )
 
@@ -72,6 +73,8 @@ def get_continuous_state_size(obj: Union[T, int]) -> int:
             return HEXAMOTION_CONTINUOUS_STATE_SIZE
         elif model_id == TRAFFICLIGHT_MODEL_ID:
             return TRAFFICLIGHT_CONTINUOUS_STATE_SIZE
+        elif model_id == CAMERA2D_MODEL_ID:
+            return CAMERA2D_CONTINUOUS_STATE_SIZE
         else:
             raise UnknownModelError(f"Unknown model ID: {model_id}")
     else:
@@ -104,6 +107,8 @@ def get_discrete_state_size(obj: Union[T, int]) -> int:
             return HEXAMOTION_DISCRETE_STATE_SIZE
         elif model_id == TRAFFICLIGHT_MODEL_ID:
             return TRAFFICLIGHT_DISCRETE_STATE_SIZE
+        elif model_id == CAMERA2D_MODEL_ID:
+            return CAMERA2D_DISCRETE_STATE_SIZE
         else:
             raise UnknownModelError(f"Unknown model ID: {model_id}")
     else:

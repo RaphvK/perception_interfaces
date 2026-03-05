@@ -82,6 +82,8 @@ namespace object_access {
         return HEXAMOTION::CONTINUOUS_STATE_SIZE;
       case TRAFFICLIGHT::MODEL_ID:
         return TRAFFICLIGHT::CONTINUOUS_STATE_SIZE;
+      case CAMERA2D::MODEL_ID:
+        return CAMERA2D::CONTINUOUS_STATE_SIZE;
       default:
         throw std::invalid_argument(kExceptionUnknownModel + std::to_string(model_id));
     }
@@ -127,6 +129,8 @@ namespace object_access {
         return HEXAMOTION::DISCRETE_STATE_SIZE;
       case TRAFFICLIGHT::MODEL_ID:
         return TRAFFICLIGHT::DISCRETE_STATE_SIZE;
+      case CAMERA2D::MODEL_ID:
+        return CAMERA2D::DISCRETE_STATE_SIZE;
       default:
         throw std::invalid_argument(kExceptionUnknownModel + std::to_string(model_id));
     }

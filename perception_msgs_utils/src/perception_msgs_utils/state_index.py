@@ -31,9 +31,9 @@ This module provides functions to get indices into state vectors based on the mo
 from typing import Dict, Set
 from .constants import (
     EGO_MODEL_ID, EGORWS_MODEL_ID, ISCACTR_MODEL_ID,
-    HEXAMOTION_MODEL_ID, TRAFFICLIGHT_MODEL_ID
+    HEXAMOTION_MODEL_ID, TRAFFICLIGHT_MODEL_ID, CAMERA2D_MODEL_ID
 )
-from perception_msgs.msg import EGO, EGORWS, ISCACTR, HEXAMOTION, TRAFFICLIGHT
+from perception_msgs.msg import EGO, EGORWS, ISCACTR, HEXAMOTION, TRAFFICLIGHT, CAMERA2D
 
 class UnknownStateEntryError(Exception):
     """Exception raised when a state entry is not supported by a model."""
@@ -143,13 +143,23 @@ _TRAFFICLIGHT_DISCRETE_INDICES = {
     'type': TRAFFICLIGHT.TYPE
 }
 
+_CAMERA2D_INDICES = {
+    'u': CAMERA2D.U,
+    'v': CAMERA2D.V,
+    'width': CAMERA2D.WIDTH,
+    'height': CAMERA2D.HEIGHT
+}
+
+_CAMERA2D_DISCRETE_INDICES = {}
+
 # Model capabilities (which states are supported by each model)
 _MODEL_CAPABILITIES: Dict[int, Set[str]] = {
     EGO_MODEL_ID: set(_EGO_INDICES.keys()),
     EGORWS_MODEL_ID: set(_EGORWS_INDICES.keys()),
     ISCACTR_MODEL_ID: set(_ISCACTR_INDICES.keys()),
     HEXAMOTION_MODEL_ID: set(_HEXAMOTION_INDICES.keys()),
-    TRAFFICLIGHT_MODEL_ID: set(_TRAFFICLIGHT_INDICES.keys())
+    TRAFFICLIGHT_MODEL_ID: set(_TRAFFICLIGHT_INDICES.keys()),
+    CAMERA2D_MODEL_ID: set(_CAMERA2D_INDICES.keys())
 }
 
 # Discrete Model capabilities (which states are supported by each model)
@@ -158,7 +168,8 @@ _DISCRETE_MODEL_CAPABILITIES: Dict[int, Set[str]] = {
     EGORWS_MODEL_ID: set(_EGORWS_DISCRETE_INDICES.keys()),
     ISCACTR_MODEL_ID: set(_ISCACTR_DISCRETE_INDICES.keys()),
     HEXAMOTION_MODEL_ID: set(_HEXAMOTION_DISCRETE_INDICES.keys()),
-    TRAFFICLIGHT_MODEL_ID: set(_TRAFFICLIGHT_DISCRETE_INDICES.keys())
+    TRAFFICLIGHT_MODEL_ID: set(_TRAFFICLIGHT_DISCRETE_INDICES.keys()),
+    CAMERA2D_MODEL_ID: set(_CAMERA2D_DISCRETE_INDICES.keys())
 }
 
 def _get_index(model_id: int, entry: str) -> int:
@@ -184,6 +195,8 @@ def _get_index(model_id: int, entry: str) -> int:
         indices = _HEXAMOTION_INDICES
     elif model_id == TRAFFICLIGHT_MODEL_ID:
         indices = _TRAFFICLIGHT_INDICES
+    elif model_id == CAMERA2D_MODEL_ID:
+        indices = _CAMERA2D_INDICES
     else:
         raise UnknownStateEntryError(f"Unknown model ID: {model_id}")
         
@@ -215,6 +228,8 @@ def _get_discrete_index(model_id: int, entry: str) -> int:
         indices = _HEXAMOTION_DISCRETE_INDICES
     elif model_id == TRAFFICLIGHT_MODEL_ID:
         indices = _TRAFFICLIGHT_DISCRETE_INDICES
+    elif model_id == CAMERA2D_MODEL_ID:
+        indices = _CAMERA2D_DISCRETE_INDICES
     else:
         raise UnknownStateEntryError(f"Unknown model ID: {model_id}")
         
@@ -327,6 +342,14 @@ def index_type(model_id: int) -> int:
     """Get the vector-index that stores a type entry."""
     return _get_discrete_index(model_id, 'type')
 
+def index_u(model_id: int) -> int:
+    """Get the vector-index that stores the u-position (horizontal pixel coordinate)."""
+    return _get_index(model_id, 'u')
+
+def index_v(model_id: int) -> int:
+    """Get the vector-index that stores the v-position (vertical pixel coordinate)."""
+    return _get_index(model_id, 'v')
+
 def has_x(model_id: int) -> bool:
     """Check if the model supports x-position."""
     return 'x' in _MODEL_CAPABILITIES.get(model_id, set())
@@ -430,3 +453,11 @@ def has_state(model_id: int) -> bool:
 def has_type(model_id: int) -> bool:
     """Check if the model supports type."""
     return 'type' in _DISCRETE_MODEL_CAPABILITIES.get(model_id, set())
+
+def has_u(model_id: int) -> bool:
+    """Check if the model supports u-position (horizontal pixel coordinate)."""
+    return 'u' in _MODEL_CAPABILITIES.get(model_id, set())
+
+def has_v(model_id: int) -> bool:
+    """Check if the model supports v-position (vertical pixel coordinate)."""
+    return 'v' in _MODEL_CAPABILITIES.get(model_id, set())

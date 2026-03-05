@@ -49,6 +49,7 @@ SOFTWARE.
 #include <perception_msgs/msg/iscactr.hpp>
 #include <perception_msgs/msg/hexamotion.hpp>
 #include <perception_msgs/msg/trafficlight.hpp>
+#include <perception_msgs/msg/camera2_d.hpp>
 
 namespace perception_msgs {
     namespace gm = geometry_msgs::msg;

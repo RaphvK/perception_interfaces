@@ -30,6 +30,7 @@ if(${ROS_VERSION} EQUAL 2)
         "msg/ISCACTR.msg"
         "msg/HEXAMOTION.msg"
         "msg/TRAFFICLIGHT.msg"
+        "msg/CAMERA2D.msg"
     )
 
     rosidl_generate_interfaces(${PROJECT_NAME}

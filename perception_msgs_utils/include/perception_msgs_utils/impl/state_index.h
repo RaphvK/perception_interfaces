@@ -37,6 +37,36 @@ namespace object_access {
   const std::string kExceptionUnknownStateEntry = "Model with the following ID does not support requested entry: ";
 
   /**
+   * @brief Get the vector-index that stores the u-position (horizontal pixel coordinate) for a given model-id.
+   *
+   * @param model_id
+   * @return int
+   */
+  inline int indexU(const unsigned char& model_id) {
+    switch(model_id) {
+      case CAMERA2D::MODEL_ID:
+        return CAMERA2D::U;
+      default:
+        throw std::invalid_argument(kExceptionUnknownStateEntry + std::to_string(model_id) + ", " + "u");
+    }
+  }
+
+  /**
+   * @brief Get the vector-index that stores the v-position (vertical pixel coordinate) for a given model-id.
+   *
+   * @param model_id
+   * @return int
+   */
+  inline int indexV(const unsigned char& model_id) {
+    switch(model_id) {
+      case CAMERA2D::MODEL_ID:
+        return CAMERA2D::V;
+      default:
+        throw std::invalid_argument(kExceptionUnknownStateEntry + std::to_string(model_id) + ", " + "v");
+    }
+  }
+
+  /**
    * @brief Get the vector-index that stores the x-position for a given model-id.
    *
    * @param model_id
@@ -371,6 +401,8 @@ namespace object_access {
         return ISCACTR::WIDTH;
       case HEXAMOTION::MODEL_ID:
         return HEXAMOTION::WIDTH;
+      case CAMERA2D::MODEL_ID:
+        return CAMERA2D::WIDTH;
       default:
         throw std::invalid_argument(kExceptionUnknownStateEntry + std::to_string(model_id) + ", " + "width");
     }
@@ -405,6 +437,8 @@ namespace object_access {
         return ISCACTR::HEIGHT;
       case HEXAMOTION::MODEL_ID:
         return HEXAMOTION::HEIGHT;
+      case CAMERA2D::MODEL_ID:
+        return CAMERA2D::HEIGHT;
       default:
         throw std::invalid_argument(kExceptionUnknownStateEntry + std::to_string(model_id) + ", " + "height");
     }
@@ -907,6 +941,8 @@ namespace object_access {
         return true;
       case HEXAMOTION::MODEL_ID:
         return true;
+      case CAMERA2D::MODEL_ID:
+        return true;
       default:
         return false;
     }
@@ -929,6 +965,8 @@ namespace object_access {
         return true;
       case HEXAMOTION::MODEL_ID:
         return true;
+      case CAMERA2D::MODEL_ID:
+        return false;
       default:
         return false;
     }
@@ -950,6 +988,8 @@ namespace object_access {
       case ISCACTR::MODEL_ID:
         return true;
       case HEXAMOTION::MODEL_ID:
+        return true;
+      case CAMERA2D::MODEL_ID:
         return true;
       default:
         return false;
@@ -1072,6 +1112,38 @@ namespace object_access {
   inline bool hasTrafficLightType(const unsigned char& model_id) {
     switch(model_id) {
       case TRAFFICLIGHT::MODEL_ID:
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  /**
+   * @brief Indicates if given model contains a u-position (horizontal pixel coordinate).
+   *
+   * @param model_id
+   * @return true
+   * @return false
+   */
+  inline bool hasU(const unsigned char& model_id) {
+    switch(model_id) {
+      case CAMERA2D::MODEL_ID:
+        return true;
+      default:
+        return false;
+    }
+  }
+
+  /**
+   * @brief Indicates if given model contains a v-position (vertical pixel coordinate).
+   *
+   * @param model_id
+   * @return true
+   * @return false
+   */
+  inline bool hasV(const unsigned char& model_id) {
+    switch(model_id) {
+      case CAMERA2D::MODEL_ID:
         return true;
       default:
         return false;
