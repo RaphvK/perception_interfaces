@@ -14,3 +14,6 @@ ObjectState[] state_history
 
 # Prediction of the object state
 ObjectStatePrediction[] state_predictions
+
+# Meta information
+string[] meta_info
